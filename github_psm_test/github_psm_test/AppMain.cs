@@ -15,6 +15,11 @@ namespace github_psm_test
 		public static void Main (string[] args)
 		{
 			Initialize ();
+			
+			Scene scene = new Scene();
+			scene.Camera.SetViewFromViewport();
+			
+			var width = Director.Instance.GL.Context.GetViewport().Width();
 
 			while (true) {
 				SystemEvents.CheckEvents ();
