@@ -20,7 +20,10 @@ namespace github_psm_test
 			scene.Camera.SetViewFromViewport();
 			
 			var width = Director.Instance.GL.Context.GetViewport().Width();
-
+			var height = Director.Instance.GL.Context.GetViewport().Height();
+			
+			 Image img = new Image(ImageMode.Rgba, new ImageSize(width,height),
+                         new ImageColor(255,0,0,0));
 			while (true) {
 				SystemEvents.CheckEvents ();
 				Update ();
