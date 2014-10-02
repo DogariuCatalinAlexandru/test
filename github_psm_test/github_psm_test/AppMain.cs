@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-using Sce.PlayStation.Core;
-using Sce.PlayStation.Core.Environment;
-using Sce.PlayStation.Core.Graphics;
-using Sce.PlayStation.Core.Input;
+using Sce.Pss.Core;
+using Sce.Pss.Core.Environment;
+using Sce.Pss.Core.Graphics;
+using Sce.Pss.Core.Input;
 
+using Sce.Pss.HighLevel.GameEngine2D;
+using Sce.Pss.HighLevel.GameEngine2D.Base;
+
+using Sce.Pss.Core.Imaging;
 namespace github_psm_test
 {
 	public class AppMain
@@ -24,6 +28,31 @@ namespace github_psm_test
 			
 			 Image img = new Image(ImageMode.Rgba, new ImageSize(width,height),
                          new ImageColor(255,0,0,0));
+			
+			texture2D texture = new Texture2D(width,height,false,
+                                     PixelFormat.Rgba);
+   texture.SetPixels(0,img.ToBuffer());
+   img.Dispose();                                  
+   
+   TextureInfo ti = new TextureInfo();
+   ti.Texture = texture;
+   
+   SpriteUV sprite = new SpriteUV();
+   sprite.TextureInfo = ti;
+   
+   sprite.Quad.S = ti.TextureSizef;
+   sprite.CenterSprite();
+   sprite.Position = scene.Camera.CalcBounds().Center;
+   
+   scene.AddChild(sprite);
+   
+   Director.Instance.RunWithScene(scene);
+			
+			img.DrawText("Hello World", 
+                new ImageColor(255,0,0,255),
+                new Font(FontAlias.System,170,FontStyle.Regular),
+                new ImagePosition(0,150));
+			
 			while (true) {
 				SystemEvents.CheckEvents ();
 				Update ();
